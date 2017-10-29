@@ -1,7 +1,7 @@
 <% include ./partials/header %>
 
 
-<div class="ui main text container segment">Add new blog
+<div class="ui main text container segment">
     <div class="ui huge header"><%= blog.title %></div>
     <div class="ui top attached">
        <div class="item">
@@ -12,6 +12,16 @@
            <div class="description">
                <p><%- blog.body %></p>
            </div>
+           
+           <div id="btnsDiv">
+           <button class="ui yellow basic button"><a href="/blogs/<%= blog._id%>/edit">Edit</button>   
+           
+           <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+               <button class="ui red basic button">Delete</button>
+           </form>
+           </div>
+            
+           </form>
        </div> 
     </div>
 </div>

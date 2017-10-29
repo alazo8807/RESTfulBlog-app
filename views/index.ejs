@@ -1,17 +1,42 @@
 <% include partials/header %>
 
-<h1>This is the index page</h1>
+<div class="ui main text container segment">
+    <div class="ui huge header">RESTful Blog App</div>
+    <div class="ui top attached segment">
+        <div class="ui divided items">
+          
+            <% blogs.forEach( function(value){ %>
+                <div class="item">
+                    <div class="image">
+                        <img src="<%= value.image %>"></img><br>
+                    </div>
+                    <div class="content">
+                        <a class="header" href="/blogs/<%= value._id%>"><%= value.title %></a>
+                        <div class="meta">
+                            <span> <%= value.created.toDateString() %></span>
+                        </div>
+                        <div class="description">
+                           <% if(value.body && value.body.length > 0){ %>
+                                <p><%- value.body.substring(0, 100) %>...</p>
+                            <% } %> 
+                        </div>
+                        <div class="extra">
+                            <a class="ui floated basic blue button" href="/blogs/<%= value._id%>">
+                                Read More 
+                                <i class="right chevron icon"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>    
+            <% }); %>
+          
+            
+        </div>
+        
+    </div>       
+</div>
 
-<% blogs.forEach( function(value){ %>
-    <div>
-        <h1><%= value.title %></h1>
-        <img src="<%= value.image %>"></img><br>
-        <span> <%= value.created.toDateString() %></span>
-        <% if(value.body && value.body.length > 0){ %>
-            <p><%= value.body.substring(0, 100) %>...</p>
-        <% } %>
-        <a href="/blogs/<%= value._id %>">Read More</a>
-    </div>    
-<% }); %>
+
 
 <% include partials/footer %>

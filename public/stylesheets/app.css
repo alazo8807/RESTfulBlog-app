@@ -5,3 +5,16 @@ i.icon{
 .container.main{
     margin-top: 7.0em;
 }
+
+#delete{
+    display: inline;
+}
+
+.chevron.icon {
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+#btnsDiv{
+    margin-top:20px;
+}
