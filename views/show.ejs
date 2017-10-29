@@ -1,6 +1,23 @@
-<% include /partials/header %>
+<% include ./partials/header %>
 
-<h1>Show page</h1>
 
-<% include /partials/footer %>
+<div class="ui main text container segment">Add new blog
+    <div class="ui huge header"><%= blog.title %></div>
+    <div class="ui top attached">
+       <div class="item">
+           <img class="ui centered rounded image" src="<%= blog.image %>"></img>
+           <div class="content">
+               <span><%= blog.created.toDateString() %></span>
+           </div>
+           <div class="description">
+               <p><%- blog.body %></p>
+           </div>
+       </div> 
+    </div>
+</div>
+
+
+
+<% include ./partials/footer %>
+
 

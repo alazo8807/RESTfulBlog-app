@@ -1,12 +1,14 @@
 var express     = require("express"),
     app         = express(),
     mongoose    = require("mongoose"),
-    bodyParser  = require("body-parser");
+    bodyParser  = require("body-parser"),
+    methodOverride = require("method-override");
 
 mongoose.connect("mongodb://localhost/restful_blog_app", {useMongoClient: true});
-app.set("view engine", 'ejs');
+app.set('view engine', 'ejs')
 app.use(express.static('public'));
 app.use( bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method")); 
 
 var blogSchema = new mongoose.Schema({
    title: String,
@@ -56,7 +58,7 @@ app.get("/", function(req, res){
     res.render("new"); 
  });
  
- //POST Route
+ //CREATE Route
  app.post("/blogs", function(req,res){
     var newBlog = req.body.blog;
     if(newBlog){
@@ -77,7 +79,49 @@ app.get("/", function(req, res){
  
  //SHOW Route
  app.get("/blogs/:id", function(req, res) {
-    res.render("show"); 
+    var id=req.params.id;
+    Blog.findById(id,function(err, foundBlog){
+       if(err){
+           console.log('error aqui');
+           res.redirect("/blogs");
+       } else{
+           console.log(foundBlog);
+           res.render("show", {blog: foundBlog}); 
+       }
+    }); 
+    
+ });
+ 
+ //EDIT Route
+ app.get("/blogs/:id/edit", function(req,res){
+    
+    Blog.findById(req.params.id, function(err, foundBlog){
+       if(err){
+          console.log("Error finding blog"); 
+          res.redirect("/blogs/:id"); 
+       
+       } else{
+          res.render("edit", { blog: foundBlog });  
+       }
+    });
+ 
+ });
+ 
+ //UPDATE Route
+ app.put("/blogs/:id", function(req, res){
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+       if(err){
+           console.log("Error updating blog");
+           res.redirect("/blogs/" + req.params.id);
+           
+       } else{
+           console.log('redirecting');
+           res.redirect("/blogs/" + req.params.id);
+           
+       }
+    });
+    
+     
  });
 
 app.listen(process.env.PORT, process.env.IP, function(){

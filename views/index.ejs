@@ -5,9 +5,12 @@
 <% blogs.forEach( function(value){ %>
     <div>
         <h1><%= value.title %></h1>
-        <img src="<%= value.image %>"></img>
-        <spanp> <%= value.created %></span>
-        <p><%= value.body %></p>
+        <img src="<%= value.image %>"></img><br>
+        <span> <%= value.created.toDateString() %></span>
+        <% if(value.body && value.body.length > 0){ %>
+            <p><%= value.body.substring(0, 100) %>...</p>
+        <% } %>
+        <a href="/blogs/<%= value._id %>">Read More</a>
     </div>    
 <% }); %>
 
